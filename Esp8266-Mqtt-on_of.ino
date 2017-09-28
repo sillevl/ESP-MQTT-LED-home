@@ -160,32 +160,7 @@ void loop() {
   if (!client.connected()) {
     reconnect();
   }
-  client.loop();
-
-  long now = millis();
-  if (now - lastMsg > 2000) {
-    lastMsg = now;
-    ++value;
-    snprintf (msg, 75, "hello world #%ld", value);
-    Serial.print("Publish message: ");
-    Serial.println(msg);
-    client.publish("outTopic", msg);
-  }
-
-
-
-
-// RGBLoop();
-//  CylonBounce(255, 255, 255, 90, 0, 100);
-//   NewKITT(255, 255, 255, 100, 1, 50);
-//  Twinkle(255,255,255, 293, 30, false);
-//   SnowSparkle(0x10, 0x10, 0x10, 20, random(100,1000));
-//   SnowSparkle(0x10, 0x10, 0x10, 20, 4000);
-//  Fire(55,120,15);
-//   BouncingBalls(255,255,1, 16);
-
-
-  
+  client.loop(); 
 }
 
 void colorWipe(uint32_t c, uint8_t wait) {
@@ -199,27 +174,11 @@ void colorWipe(uint32_t c, uint8_t wait) {
 }
 
 void showStrip() {
-#ifdef ADAFRUIT_NEOPIXEL_H
-  // NeoPixel
   strip.show();
-#endif
-#ifndef ADAFRUIT_NEOPIXEL_H
-  // FastLED
-  FastLED.show();
-#endif
 }
 
 void setPixel(int Pixel, byte red, byte green, byte blue) {
-#ifdef ADAFRUIT_NEOPIXEL_H
-  // NeoPixel
   strip.setPixelColor(Pixel, strip.Color(red, green, blue));
-#endif
-#ifndef ADAFRUIT_NEOPIXEL_H
-  // FastLED
-  leds[Pixel].r = red;
-  leds[Pixel].g = green;
-  leds[Pixel].b = blue;
-#endif
 }
 
 void setAll(byte red, byte green, byte blue) {
