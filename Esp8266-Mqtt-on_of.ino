@@ -39,7 +39,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_RGBW + NEO_KHZ800
 
 // Update these with values suitable for your network.
 
-const char* ssid     = "sybren";
+const char* ssid     = "Iphone 6 van sybren";
 const char* password = "1111111111";
 const char* mqtt_server = "mqtt.labict.be";
 const char* TOPIC1 = "sybren";
@@ -80,28 +80,60 @@ void setup_wifi() {
   Serial.println(WiFi.localIP());
 }
 
-void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
-  }
-  Serial.println();
 
-  // Switch on the LED if an 1 was received as first character
-  if ((char)payload[0] == '1') {
-  //  digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
-    // but actually the LED is on; this is because
-    // it is acive low on the ESP-01)
+
+void callback(char* p_topic, byte* p_payload, unsigned int p_length) {
+  // concat the payload into a string
+  String payload;
+  //  if (strcmp(p_topic,TOPIC1)==0){
+  //    // whatever you want for this topic
+  //
+//############################################### CALLBACK soft code #######################################
+
+for (uint8_t i = 0; i < p_length; i++) {
+    payload.concat((char)p_payload[i]);
+  }
+     Serial.println(payload);
+
+  if (payload.equals(String("Off"))) {
+    colorWipe(strip.Color(0, 0, 0), 0);
+  }
+ else if (payload.equals(String("On"))) {
     colorWipe(strip.Color(255, 255, 255, 255), 0);
-    
-  } else {
-   // digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
-    colorWipe(strip.Color(0, 0, 0, 0), 0);
+  }
+   else if (payload.equals(String("green"))) {
+//    colorWipe(strip.Color(255, 0, 0, 0), 0);
+  }
+
+
+else if (payload.equals(String("sleep"))) {
+//    sleep(strip.Color(255, 255, 255,255), 0);
+  }
+
+
+//############################################### CALLBACK Hard code #######################################
+
+else if (payload.equals(String("cyclon"))) {
+    CylonBounce(255, 255, 255, 90, 0, 100);
+  }
+ else if (payload.equals(String("newkit"))) {
+    NewKITT(255, 255, 255, 100, 1, 50);
+  }
+else  if (payload.equals(String("twinkle"))) {
+    Twinkle(255,255,255, 293, 30, false);
+  }
+ else if (payload.equals(String("sparkle"))) {
+    SnowSparkle(0x10, 0x10, 0x10, 20, 4000);
+  }
+ else  if (payload.equals(String("balls"))) {
+   BouncingBalls(255,255,1, 16);
+
   }
   
 }
+
+  
+
 
 void reconnect() {
   // Loop until we're reconnected
@@ -458,13 +490,13 @@ void BouncingBalls(byte red, byte green, byte blue, int BallCount) {
     setAll(0, 0, 0);
   }
 }
-void colorWipe(uint32_t c, uint8_t wait) {
-  for(uint16_t i=0; i<strip.numPixels(); i++) {
-    strip.setPixelColor(i, c);
-    strip.show();
-    delay(wait);
-  }
-}
+//void colorWipe(uint32_t c, uint8_t wait) {
+//  for(uint16_t i=0; i<strip.numPixels(); i++) {
+//    strip.setPixelColor(i, c);
+//    strip.show();
+//    delay(wait);
+//  }
+//}
 
 void rainbow(uint8_t wait) {
   uint16_t i, j;
