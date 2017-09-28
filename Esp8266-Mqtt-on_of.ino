@@ -27,22 +27,14 @@
 #include <PubSubClient.h>
 #include <Adafruit_NeoPixel.h>
 
+#include "settings.h"
+
 
 #define PIN 12
 #define NUM_LEDS 192
 #define BRIGHTNESS 255
 
-
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_RGBW + NEO_KHZ800);
-
-
-
-// Update these with values suitable for your network.
-
-const char* ssid     = "Iphone 6 van sybren";
-const char* password = "1111111111";
-const char* mqtt_server = "mqtt.labict.be";
-const char* TOPIC1 = "sybren";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
