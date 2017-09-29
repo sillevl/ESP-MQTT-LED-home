@@ -29,6 +29,7 @@
 
 #include "settings.h"
 
+#include "src/Effects/Effects.h"
 
 #define PIN 12
 #define NUM_LEDS 192
@@ -88,13 +89,25 @@ for (uint8_t i = 0; i < p_length; i++) {
      Serial.println(payload);
 
   if (payload.equals(String("Off"))) {
-    colorWipe(strip.Color(0, 0, 0), 0);
+    // colorWipe(strip.Color(0, 0, 0), 0);
+    AllOff effect(&strip);
+    effect.run();
   }
  else if (payload.equals(String("On"))) {
-    colorWipe(strip.Color(255, 255, 255, 255), 0);
+    FixedColor effect(&strip, strip.Color(255,255,255));
+    effect.run();
   }
    else if (payload.equals(String("green"))) {
-//    colorWipe(strip.Color(255, 0, 0, 0), 0);
+    FixedColor effect(&strip, strip.Color(0,255,0));
+    effect.run();
+  }
+   else if (payload.equals(String("blue"))) {
+    FixedColor effect(&strip, strip.Color(0,0,255));
+    effect.run();
+  }
+   else if (payload.equals(String("red"))) {
+    FixedColor effect(&strip, strip.Color(255,0,0));
+    effect.run();
   }
 
 
