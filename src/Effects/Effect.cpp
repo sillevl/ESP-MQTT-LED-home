@@ -10,7 +10,7 @@ Effect::Effect(Adafruit_NeoPixel* strip)
 
 Effect::~Effect()
 {
-    delete strip;
+    // delete strip;
 }
 
 void Effect::setSpeed(float speed)
