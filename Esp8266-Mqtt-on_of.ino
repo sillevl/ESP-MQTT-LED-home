@@ -32,7 +32,7 @@
 #include "src/Effects/Effects.h"
 
 #define PIN 12
-#define NUM_LEDS 192
+#define NUM_LEDS 6
 #define BRIGHTNESS 255
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
