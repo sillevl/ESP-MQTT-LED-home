@@ -45,6 +45,7 @@ int value = 0;
 
 void setup() {
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
+  digitalWrite(LED_BUILTIN, HIGH);
   Serial.begin(115200);
   setup_wifi();
   client.setServer(mqtt_server, 1883);
@@ -66,6 +67,8 @@ void setup_wifi() {
     delay(500);
     Serial.print(".");
   }
+
+  digitalWrite(LED_BUILTIN, LOW);
 
   Serial.println("");
   Serial.println("WiFi connected");
