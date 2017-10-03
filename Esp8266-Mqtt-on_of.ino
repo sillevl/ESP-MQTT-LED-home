@@ -35,7 +35,7 @@
 #define NUM_LEDS 192
 #define BRIGHTNESS 255
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_RGBW + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 
 WiFiClient espClient;
 PubSubClient client(espClient);
