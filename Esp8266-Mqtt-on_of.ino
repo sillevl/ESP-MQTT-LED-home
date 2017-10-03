@@ -30,6 +30,7 @@
 #include "settings.h"
 
 #include "src/Effects/Effects.h"
+#include "src/StatusLed/StatusLed.h"
 
 #define PIN 12
 #define NUM_LEDS 6
@@ -43,9 +44,9 @@ long lastMsg = 0;
 char msg[50];
 int value = 0;
 
+StatusLed statusLed(BUILTIN_LED);
+
 void setup() {
-  pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
-  digitalWrite(LED_BUILTIN, HIGH);
   Serial.begin(115200);
   setup_wifi();
   client.setServer(mqtt_server, 1883);
@@ -68,7 +69,7 @@ void setup_wifi() {
     Serial.print(".");
   }
 
-  digitalWrite(LED_BUILTIN, LOW);
+  statusLed.on();
 
   Serial.println("");
   Serial.println("WiFi connected");
