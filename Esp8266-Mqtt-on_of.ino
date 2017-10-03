@@ -31,6 +31,7 @@
 
 #include "src/Effects/Effects.h"
 #include "src/StatusLed/StatusLed.h"
+#include "src/EffectFactory.h"
 
 #define PIN 12
 #define NUM_LEDS 6
@@ -45,6 +46,7 @@ char msg[50];
 int value = 0;
 
 StatusLed statusLed(BUILTIN_LED);
+Effect* effect;
 
 void setup() {
   Serial.begin(115200);
@@ -77,72 +79,12 @@ void setup_wifi() {
   Serial.println(WiFi.localIP());
 }
 
-
-
 void callback(char* p_topic, byte* p_payload, unsigned int p_length) {
-  // concat the payload into a string
-  String payload;
-  //  if (strcmp(p_topic,TOPIC1)==0){
-  //    // whatever you want for this topic
-  //
-//############################################### CALLBACK soft code #######################################
-
-for (uint8_t i = 0; i < p_length; i++) {
-    payload.concat((char)p_payload[i]);
-  }
-     Serial.println(payload);
-
-  if (payload.equals(String("Off"))) {
-    // colorWipe(strip.Color(0, 0, 0), 0);
-    AllOff effect(&strip);
-    effect.run();
-  }
- else if (payload.equals(String("On"))) {
-    FixedColor effect(&strip, strip.Color(255,255,255));
-    effect.run();
-  }
-   else if (payload.equals(String("green"))) {
-    FixedColor effect(&strip, strip.Color(0,255,0));
-    effect.run();
-  }
-   else if (payload.equals(String("blue"))) {
-    FixedColor effect(&strip, strip.Color(0,0,255));
-    effect.run();
-  }
-   else if (payload.equals(String("red"))) {
-    FixedColor effect(&strip, strip.Color(255,0,0));
-    effect.run();
-  }
-
-
-else if (payload.equals(String("sleep"))) {
-//    sleep(strip.Color(255, 255, 255,255), 0);
-  }
-
-
-//############################################### CALLBACK Hard code #######################################
-
-else if (payload.equals(String("cyclon"))) {
-    CylonBounce(255, 255, 255, 90, 0, 100);
-  }
- else if (payload.equals(String("newkit"))) {
-    NewKITT(255, 255, 255, 100, 1, 50);
-  }
-else  if (payload.equals(String("twinkle"))) {
-    Twinkle(255,255,255, 293, 30, false);
-  }
- else if (payload.equals(String("sparkle"))) {
-    SnowSparkle(0x10, 0x10, 0x10, 20, 4000);
-  }
- else  if (payload.equals(String("balls"))) {
-   BouncingBalls(255,255,1, 16);
-
-  }
-  
+  EffectFactory* effects = new EffectFactory(&strip);
+  delete effect;
+  Effect* effect = effects->getEffect(p_payload, p_length);
+  effect->run();
 }
-
-  
-
 
 void reconnect() {
   // Loop until we're reconnected
