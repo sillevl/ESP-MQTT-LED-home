@@ -26,7 +26,7 @@ float Effect::getSpeed()
 void Effect::setBrightness(float brightness)
 {
     this->brightness = brightness;
-    strip->setBrightness(brightness);
+    strip->setBrightness(brightness * 255);
 }
 
 float Effect::getBrightness()
